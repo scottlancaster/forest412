@@ -66,6 +66,13 @@ colnames(forest.cover) <- c("Elevation",
                            "Soil_Type40",
                            "Cover_Type")
 
+# Add the name of each cover type to a new column
+cover.types <- data.frame(id = 1:7,
+                          types = c("Spruce/Fir", "Lodgepole Pine",
+                                    "Ponderosa Pine", "Cottonwood/Willow",
+                                    "Aspen", "Douglas-fir", "Krummholz"))
+forest.cover$Cover_Name <- cover.types$types[match(forest.cover$Cover_Type, cover.types$id)]
+
 # Obtain summary
 summary(forest.cover)
 str(forest.cover)
@@ -73,14 +80,14 @@ nrow(forest.cover)
 
 # Get the count for each cover type class
 table(forest.cover$Cover_Type)
-
+table(forest.cover$Cover_Name)
 
 #-------------------------------------------------------------------------------
 # Density plots
 # Perform a density plot to see how the classes look against each other
 densityplot(~ Elevation + Aspect + Slope,
-            data=forest.cover.df,
-            group=Cover_Type,
+            data=forest.cover,
+            group=Cover_Name,
             as.table=T,
             plot.points=F,
             ref=T,
