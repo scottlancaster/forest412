@@ -8,7 +8,8 @@ library(corrplot)
 library(ggplot2)
 library(lattice)
 
-# Load in the data
+#-------------------------------------------------------------------------------
+# Load, initialize, and view summary statistics
 forest.cover <- read.csv(file = "covtype.data")
 colnames(forest.cover) <- c("Elevation",                           
                            "Aspect",
@@ -85,49 +86,27 @@ table(forest.cover$Cover_Name)
 #-------------------------------------------------------------------------------
 # Density plots
 # Perform a density plot to see how the classes look against each other
-densityplot(~ Elevation + Aspect + Slope,
+densityplot(~ Elevation + Aspect + Slope + Horizontal_Distance_To_Hydrology
+            + Vertical_Distance_To_Hydrology + Horizontal_Distance_To_Roadways
+            + Hillshade_9am + Hillshade_Noon + Hillshade_3pm
+            + Horizontal_Distance_To_Fire_Points,
             data=forest.cover,
             group=Cover_Name,
             as.table=T,
             plot.points=F,
             ref=T,
-            auto.key=list(columns=3),
+            auto.key=list(columns=4),
             scales=list(x="free", y="free"),
-            layout=(c(4,4)))
-
-densityplot( ~ Elevation + Aspect + Slope + Horizontal_Distance_To_Hydrology +
-             Vertical_Distance_To_Hydrology + Horizontal_Distance_To_Roadways + 
-             Hillshade_9am + Hillshade_Noon + Hillshade_3pm +
-             Horizontal_Distance_To_Fire_Points,
-             data = forest.cover,
-             group = class,
-             as.table = T,
-             plot.points = F,
-             ref = T,
-             auto.key = list(columns=3),
-             scales = list(x = "free", y = "free"),
-             layout = (c(4,4)))
-
-densityplot( ~ Elevation + Aspect,
-             data = forest.cover,
-             group = class,
-             as.table = T,
-             plot.points = F,
-             ref = T,
-             auto.key = list(columns=7),
-             scales = list(x = "free", y = "free"),
-             layout = (c(4,4)))
+            layout=(c(3,4)))
 
 #-------------------------------------------------------------------------------
 # This package is much more flexible allowing you to specify the order of the
 # data for the correlation matrix as well as various shapes. It has a nice
 # default color palette as well.
-corr.forest.cover.z <- cor(forest.cover.df)
+corr.forest.cover.z <- cor(forest.cover)
 
 # Set the outer margins so text around the edges won't get truncated
 oldpar <- par(omi=c(0.25, 0.1, 0.25, 0.1))
 corrplot(corr.forest.cover.z, method="color", order = "FPC", tl.col="black",
          tl.srt=45, mar=c(0.1, 0, 0.5, 0), title="Correlation Plot of Forest Cover")
-
-
 par(oldpar)
