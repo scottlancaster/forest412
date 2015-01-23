@@ -1,4 +1,16 @@
-setwd("/Users/Scott/OneDrive/Documents/Northwestern/07_PREDICT_412/Assignments/ForestCover/")
+#-------------------------------------------------------------------------------
+# Forest Cover Project
+# PREDICT 412-DL Section 55 Winter 2015
+#
+# Scott's Copy -- this is Scott's source code
+#
+# Scott Lancaster
+#
+# Perform a data quality check as well as exploratory data analysis of the
+# Forest Cover data
+#
+
+setwd("/Users/Scott/Documents/GitHub/forest412")
 
 #install.packages("corrplot")
 #install.packages("ggplot2")
